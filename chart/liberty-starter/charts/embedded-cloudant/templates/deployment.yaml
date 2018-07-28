@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-cloudant-deployment
+  name: {{ .Chart.Name }}-cloudant-deployment
   labels:
     app: liberty-starter
     tier: database
@@ -15,7 +15,7 @@ spec:
         tier: database
     spec:
       containers:
-      - name: {{ .Release.Name }}-cloudant
+      - name: {{ .Chart.Name }}-cloudant
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
