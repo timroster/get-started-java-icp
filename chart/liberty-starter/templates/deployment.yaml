@@ -25,7 +25,7 @@ spec:
         - name: CLOUDANT_USER
           valueFrom:
             secretKeyRef:
-              name: {{ .charts.Name }}-secrets
+              name: {{ .Chart.Name }}-secrets
               key: cloudant-username
         - name: CLOUDANT_PASSWORD
           valueFrom:
