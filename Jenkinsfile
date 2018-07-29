@@ -16,12 +16,21 @@ podTemplate(label: 'mypod', cloud: cloud, serviceAccount: serviceAccount, namesp
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
     ],
     containers: [
+        containerTemplate(name: 'maven', image: 'maven:3-alpine', args: '-v /root/.m2:/root/.m2', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl', ttyEnabled: true, command: 'cat'),
         containerTemplate(name: 'docker' , image: 'docker:17.06.1-ce', ttyEnabled: true, command: 'cat')
   ]) {
 
     node('mypod') {
         checkout scm
+        container('maven') {
+            stage('Build application war file') {
+               sh """
+               #!/bin/bash
+               mvn -B -DskipTests clean package
+               """
+            }
+        }
         container('docker') {
             stage('Build Docker Image') {
                 sh """
