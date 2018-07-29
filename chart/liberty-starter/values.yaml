@@ -9,7 +9,7 @@ global:
 
 image:
   repository: djccarew/liberty-starter
-  tag: 0.91
+  tag: 0.911
   pullPolicy: Always
 
 service:
