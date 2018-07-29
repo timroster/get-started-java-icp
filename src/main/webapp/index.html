@@ -31,7 +31,7 @@
           "name": "name",
           "what_is_your_name": "What is your name?",
           "hello": "Hello $1",
-          "added_to_database": "Hello $1, I've added you to the database!",
+          "added_to_database": "Hello $1, I've added your name to the database!",
           "database_contents": "Database contents: "
         },
         es: {
@@ -39,8 +39,24 @@
           "name": "nombre",
           "what_is_your_name": "¿Cual es tu nombre?",
           "hello": "Hola $1",
-          "added_to_database": "¡Hola $1, Agregué tu nombre a la base de datos!",
+          "added_to_database": "¡Hola $1, agregué tu nombre a la base de datos!",
           "database_contents": "Contenido de la base de datos: "
+        },
+        pt: {
+          "welcome": "Bem vinda.",
+          "name": "nome",
+          "what_is_your_name": "Qual é o seu nome?",
+          "hello": "Olá $1",
+          "added_to_database": "Olá $1, eu adicionei seu nome ao banco de dados!",
+          "database_contents": "Conteúdo do banco de dados: "
+        },
+        fr: {
+          "welcome": "Bienvenue.",
+          "name": "nom",
+          "what_is_your_name": "Quel est ton nom?",
+          "hello": "Bonjour $1",
+          "added_to_database": "Bonjour $1, j'ai ajouté ton nom à la base de données!",
+          "database_contents": "Contenu de la base de données: "
         },
         ja: {
           "welcome": "ようこそ。",
@@ -55,49 +71,7 @@
       $('#user_name').attr("placeholder", $.i18n('name'));
     });
 
-    //Submit data when enter key is pressed
-    $('#user_name').keydown(function(e) {
-      var name = $('#user_name').val();
-      if (e.which == 13 && name.length > 0) { //catch Enter key
-        //POST request to API to create a new visitor entry in the database
-        $.ajax({
-            method: "POST",
-            url: "./api/visitors",
-            contentType: "application/json",
-            data: JSON.stringify({
-              name: name
-            })
-          })
-          .done(function(data) {
-            if (data && data.name) {
-              if (data._id)
-                $('#response').html($.i18n('added_to_database', AntiXSS.sanitizeInput(data.name)));
-              else
-                $('#response').html($.i18n('hello', AntiXSS.sanitizeInput(data.name)));
-            } else {
-              $('#response').html(AntiXSS.sanitizeInput(data));
-            }
-            $('#nameInput').hide();
-            getNames();
-          });
-      }
-    });
 
-    //Retrieve all the visitors from the database
-    function getNames() {
-      $.get("./api/visitors")
-        .done(function(data) {
-          if (data.length > 0) {
-            data.forEach(function(element, index) {
-              data[index] = AntiXSS.sanitizeInput(element)
-            });
-            $('#databaseNames').html($.i18n('database_contents') + JSON.stringify(data));
-          }
-        });
-    }
-
-    //Call getNames on page load.
-    getNames();
   </script>
 
 </head>
@@ -116,11 +90,14 @@
   </div>
   <footer class="footer">
     <div class="container">
-      <span>GettingStartedJava V0.9 &copy; 2018 IBM Corporation</span>
+      <span>GettingStartedJava V0.91 &copy; 2018 IBM Corporation</span>
     </div>
   </footer>
 
 </body>
+
+<script src="utils.js" type="text/javascript"></script>
+
 
 
 </html>
