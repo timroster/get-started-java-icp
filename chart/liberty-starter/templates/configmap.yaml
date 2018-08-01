@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Chart.Name }}-configmap
+  name: {{ .Release.Name }}-configmap
 data:
-    cloudant-host: {{ .Chart.Name }}-cloudant-service
+    cloudant-host: {{ .Release.Name }}-cloudant-service
     cloudant-port: "{{ .Values.global.cloudantPort }}"

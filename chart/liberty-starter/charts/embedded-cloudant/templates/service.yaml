@@ -12,7 +12,7 @@ spec:
   - port: {{ .Values.global.cloudantPort }}
     targetPort: {{ .Values.global.cloudantPort }}
     protocol: TCP
-    name: {{ .Values.service.name }}
+    name: {{ .Release.Name }}-cloudant-service
   selector:
     app: liberty-starter
     tier: database

@@ -12,7 +12,7 @@ spec:
   - port: {{ .Values.service.internalPort }}
     targetPort: {{ .Values.service.internalPort }}
     protocol: TCP
-    name: {{ .Values.service.name }}
+    name: {{ .Release.Name }}-web-service
   selector:
     app: liberty-starter
     tier: frontend

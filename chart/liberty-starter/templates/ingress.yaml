@@ -1,0 +1,18 @@
+##################################################################################################
+# Ingress Routing
+##################################################################################################
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+   name: {{ .Chart.Name }}-ingress
+   annotations:
+  #   ingress.kubernetes.io/rewrite-target: /
+   namespace: default
+spec:
+   rules:
+   - http:
+      paths:
+      - path: /liberty-starter
+        backend:
+           serviceName: {{ .Chart.Name }}-web-service
+           servicePort: {{ .Values.service.internalPort }}

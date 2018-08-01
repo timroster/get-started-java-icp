@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}-web-deployment
+  name: {{ .Release.Name }}-web-deployment
   labels:
     app: liberty-starter
     tier: frontend
@@ -15,7 +15,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: {{ .Chart.Name }}-web
+      - name: {{ .Release.Name }}-web
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
@@ -25,20 +25,20 @@ spec:
         - name: CLOUDANT_USER
           valueFrom:
             secretKeyRef:
-              name: {{ .Chart.Name }}-secrets
+              name: {{ .Release.Name }}-secrets
               key: cloudant-username
         - name: CLOUDANT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ .Chart.Name }}-secrets
+              name: {{ .Release.Name }}-secrets
               key: cloudant-password
         - name: CLOUDANT_HOST
           valueFrom:
             configMapKeyRef:
-              name: {{ .Chart.Name }}-configmap
+              name: {{ .Release.Name }}-configmap
               key: cloudant-host
         - name: CLOUDANT_PORT
           valueFrom:
               configMapKeyRef:
-                 name: {{ .Chart.Name }}-configmap
+                 name: {{ .Release.Name }}-configmap
                  key: cloudant-port
