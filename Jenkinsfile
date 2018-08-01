@@ -6,7 +6,7 @@ def serviceAccount = env.SERVICE_ACCOUNT ?: "default"
 def namespace = env.NAMESPACE ?: "default"
 def registry = env.REGISTRY ?: "mycluster.icp:8500"
 
-podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default, namespace: 'default',
+podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', namespace: 'default',
     volumes: [
         hostPathVolume(hostPath: '/etc/docker/certs.d', mountPath: '/etc/docker/certs.d'),
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
