@@ -8,8 +8,9 @@ def registry = env.REGISTRY ?: "mycluster.icp:8500"
 
 podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', namespace: 'default',
     volumes: [
-        hostPathVolume(hostPath: '/etc/docker/certs.d', mountPath: '/etc/docker/certs.d'),
-        hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
+        hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
+        secretVolume(secretName: 'registry-account', mountPath: '/var/run/secrets/registry-account'),
+        configMapVolume(configMapName: 'registry-config', mountPath: '/var/run/configs/registry-config')
     ],
     containers: [
         containerTemplate(name: 'maven', image: 'maven:3-alpine', ttyEnabled: true, command: 'cat'),
