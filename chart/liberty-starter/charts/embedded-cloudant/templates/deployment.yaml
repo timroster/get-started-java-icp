@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}-cloudant-deployment
+  name: {{ .Release.Name }}-cloudant-deployment
   labels:
-    app: liberty-starter
+    app: {{ .Release.Name }}-app
     tier: database
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
@@ -11,11 +11,11 @@ spec:
   template:
     metadata:
       labels:
-        app: liberty-starter
+        app: {{ .Release.Name }}-app
         tier: database
     spec:
       containers:
-      - name: {{ .Chart.Name }}-cloudant
+      - name: {{ .Release.Name }}-cloudant
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:

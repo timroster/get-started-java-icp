@@ -13,7 +13,6 @@ image:
   pullPolicy: Always
 
 service:
-  name: liberty-starter-web
   type: NodePort
   internalPort: 9080
 
@@ -21,7 +20,6 @@ service:
 embedded-cloudant:
   replicaCount: 1
   service:
-    name: liberty-starter-cloudant
     type: ClusterIP
   image:
     repository: ibmcom/cloudant-developer
