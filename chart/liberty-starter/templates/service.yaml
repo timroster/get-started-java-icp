@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-web-service
   labels:
-    app: liberty-starter
+    app: {{ .Release.Name }}-app
     tier: frontend
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
@@ -14,5 +14,5 @@ spec:
     protocol: TCP
     name: {{ .Release.Name }}-web-service
   selector:
-    app: liberty-starter
+    app: {{ .Release.Name }}-app
     tier: frontend

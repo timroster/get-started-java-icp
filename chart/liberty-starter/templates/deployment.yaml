@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ .Release.Name }}-web-deployment
   labels:
-    app: liberty-starter
+    app: {{ .Release.Name }}-app
     tier: frontend
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 spec:
@@ -11,7 +11,7 @@ spec:
   template:
     metadata:
       labels:
-        app: liberty-starter
+        app: {{ .Release.Name }}-app
         tier: frontend
     spec:
       containers:
