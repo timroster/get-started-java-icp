@@ -1,11 +1,3 @@
-// Pod Template
-def cloud = env.CLOUD ?: "kubernetes"
-def serviceAccount = env.SERVICE_ACCOUNT ?: "default"
-
-// Pod Environment Variables
-def namespace = env.NAMESPACE ?: "default"
-def registry = env.REGISTRY ?: "mycluster.icp:8500"
-
 podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', namespace: 'default',
     volumes: [
         hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
@@ -35,7 +27,7 @@ podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', name
                 NAMESPACE=`cat /var/run/configs/registry-config/namespace`
                 REGISTRY=`cat /var/run/configs/registry-config/registry`
 
-                docker build -t \${REGISTRY}/\${NAMESPACE}/bluecompute-ce-web:${env.BUILD_NUMBER} .
+                docker build -t ${REGISTRY}/${NAMESPACE}/liberty-starter:${env.BUILD_NUMBER} . 
                 """
             }
             stage('Push Docker Image to Registry') {
@@ -47,7 +39,7 @@ podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', name
                 set +x
                 DOCKER_USER=`cat /var/run/secrets/registry-account/username`
                 DOCKER_PASSWORD=`cat /var/run/secrets/registry-account/password`
-                docker login -u=\${DOCKER_USER} -p=\${DOCKER_PASSWORD} \${REGISTRY}
+                docker login -u=${DOCKER_USER} -p=${DOCKER_PASSWORD} ${REGISTRY}
                 set -x
 
                 docker push ${REGISTRY}/${NAMESPACE}/liberty-starter:${env.BUILD_NUMBER}
@@ -64,7 +56,7 @@ podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', name
                 REGISTRY=`cat /var/run/configs/registry-config/registry`
                 DEPLOYMENT=`kubectl --namespace=${NAMESPACE} get deployments -l app=liberty-starter,tier=frontend -o name`
                 
-                kubectl --namespace=\${NAMESPACE} get \${DEPLOYMENT}
+                kubectl --namespace=${NAMESPACE} get ${DEPLOYMENT}
 
                 if [ \${?} -ne "0" ]; then
                     # No deployment to update
@@ -72,7 +64,7 @@ podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', name
                     exit 1
                 fi
                 # Update Deployment
-                kubectl --namespace=${NAMESPACE} set image \${DEPLOYMENT} liberty-starter-web=${REGISTRY}/${NAMESPACE}/liberty-starter:${env.BUILD_NUMBER}
+                kubectl --namespace=${NAMESPACE} set image ${DEPLOYMENT} liberty-starter-web=${REGISTRY}/${NAMESPACE}/liberty-starter:${env.BUILD_NUMBER}
                 kubectl --namespace=${NAMESPACE} rollout status \${DEPLOYMENT}
                 """
             }
