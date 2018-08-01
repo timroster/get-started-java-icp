@@ -50,7 +50,7 @@ podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', name
                 docker login -u=\${DOCKER_USER} -p=\${DOCKER_PASSWORD} \${REGISTRY}
                 set -x
 
-                docker push \${REGISTRY}/\${NAMESPACE}/bluecompute-ce-web:${env.BUILD_NUMBER}
+                docker push ${REGISTRY}/${NAMESPACE}/liberty-starter:${env.BUILD_NUMBER}
                 """
               
             }
