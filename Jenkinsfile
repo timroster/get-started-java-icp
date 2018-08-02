@@ -54,7 +54,7 @@ podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', name
                 set +e
                 NAMESPACE=`cat /var/run/configs/registry-config/namespace`
                 REGISTRY=`cat /var/run/configs/registry-config/registry`
-                DEPLOYMENT=`kubectl --namespace=\${NAMESPACE} get deployments -l app=liberty-starter,tier=frontend -o name`
+                DEPLOYMENT=`kubectl --namespace=\${NAMESPACE} get deployments -l app=liberty-starter-app,tier=frontend -o name`
                 
                 kubectl --namespace=\${NAMESPACE} get \${DEPLOYMENT}
 
