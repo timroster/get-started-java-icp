@@ -18,3 +18,7 @@ The following steps are the general procedure to set up and deploy your app to I
 ## Before you begin
 
 You'll need [IBM Cloud Private](https://www.ibm.com/cloud-computing/products/ibm-cloud-private/), the [IBM Cloud Private CLI](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_2.1.0.3/manage_cluster/install_cli.html) and the command line tools [kubectl](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_2.1.0.3/manage_cluster/cfc_cli.html), and [helm](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_2.1.0.3/app_center/create_helm_cli.html).
+
+You will also need to follow the steps detailed in the setup/README.md document on configuring the ICP cli plugin and configuring Helm.
+
+## 
