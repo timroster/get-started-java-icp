@@ -83,3 +83,78 @@ helm install . --tls --name liberty-starter
 ```
 
 This will deploy the java application as well as a cloudant database within the kubernetes cluster.
+
+## Creating a CI/CD pipeline
+
+In this section we will be connecting our cloned GitRepo to a Continuous Integration/Continuous Deployment pipeline built with Jenkins. This pipeline contains 4 different steps as follows:
+
+  | Stage                         | Purpose                                                                        |
+  | ----------------------------- | ------------------------------------------------------------------------------ |
+  | Build Application War File    | Pulls in dependencies from Maven and packages application into .war file       |
+  | Build Docker Image            | Builds the Docker image based on the Dockerfile                                |
+  | Push Docker Image to Registry | Uploads the Docker image to the Docker image registry withinin ICP             |
+  | Deploy New Docker Image       | Updates the image tag in the Kubernetes deployment triggering a rolling update |
+
+ More details of this pipline can be found in the [Jenkinsfile](./Jenkinsfile).
+
+ 1. Jenkins is already installed in this instance of IBM Cloud Private. To access it, open the Firefox browser and click on the Jenkins bookmark from the bookmark bar.
+
+ ![Jenkins bookmark](./images/jenkinsBookmark.png)
+
+ 2. Log into Jenkins. The username and password should be autofilled for you. If not, the username should be "admin" and the password is stored in a kubernetes secret. To view the secret, run the following command in the terminal:
+
+ ```bash
+ printf $(kubectl get secret --namespace default jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+ ```
+
+3. Click on **New Item**, enter "liberty_starter_pipeline" for the name, and select **Pipeline**. When done, click **ok**.
+
+![liberty starter pipeline](./images/libertyPipeline.png)
+
+4. Find and click on the **Configure** button on the left side of the page.
+
+5. Scroll down to the **Pipeline** section and find the **definition** drop down menu. Select **Pipeline script from SCM** and for **SCM** select **Git**.
+
+6. For **Repository URL** enter the url to the cloned repository that you forked earlier. Ensure the **/master** branch is being targeted and click **Save**.
+
+![pipeline config](./images/pipelineConfig.png) 
+
+Now with our pipeline configured we can make a change and deploy the new version. 
+
+7. On your local machine, clone the repo that you forked before. To clone the repo use the following comand replacing **\<url to repo\>** with the url that you copied.
+
+```bash
+git clone <url to repo>
+```
+
+8. Open the application in a code editor or IDE of your choice. For this lab we will be making a change to the index.html page to change the display language.
+
+9. Open /src/main/webapp/index.html and on line 2 locate the **\<html lang="es">** tag.
+
+![lang tag](./images/langTag.png)
+
+10. Change the **"es"** to one of the following:
+
+- en: English
+- es: Spanish
+- pt: Portuguese
+- fr: French
+- ja: Japanese
+
+This will change the language that loads on the webpage to whatever language you selected.
+
+11. Save the file and push to github.
+
+Since this instance of ICP is for demos, it can't be accessed by github which makes automatic deployments not possible on code commits but we can manually trigger pipeline builds.
+
+12. Swich back to ICP and open the pipeline that was created earlier.
+
+13. Click on the **Build now** button to manually start the build process. This will pull the latest code from your code repository on GitHub.
+
+![build now](./images/buildNow.png)
+
+14. Your pipeline will now start building. You should see the different stages appear on the pipeline page.
+
+![stages](./images/stages.png)
+
+15. When the pipeline is finish deploying, open up the app from ICP and you can see that the language of the page has been changed.
