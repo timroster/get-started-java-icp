@@ -17,7 +17,7 @@ RUN \
     rm -Rf /tmp/* && \
 	rm -Rf /var/log/*
 
-COPY init.sql /dbinit/
+COPY docker/derby/init.sql /dbinit/
 
 EXPOSE ${PORT_TO_EXPOSE}
 

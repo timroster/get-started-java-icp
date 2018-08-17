@@ -7,7 +7,7 @@ ADD target/GetStartedJava.war /opt/ibm/wlp/usr/servers/defaultServer/apps
 
 # Added Derby Type 4 JDBC driver
 RUN mkdir /opt/ibm/wlp/usr/shared/resources/derby
-COPY derby/derbyclient.jar /opt/ibm/wlp/usr/shared/resources/derby/
+COPY docker/liberty/derbyclient.jar /opt/ibm/wlp/usr/shared/resources/derby/
 
 
 #FEATURES: Install any features that are required

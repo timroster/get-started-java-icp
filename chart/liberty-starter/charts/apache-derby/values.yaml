@@ -1,0 +1,9 @@
+
+replicaCount: 1
+service:
+  type: ClusterIP
+  internalPort: 1527
+image:
+  repository: djccarew/derby-starter
+  tag: 0.9
+  pullPolicy: IfNotPresent
