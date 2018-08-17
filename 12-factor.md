@@ -44,7 +44,7 @@ Store Config in the environment (not in the code).
 Treat backing resources as attached services. 
 
 - [ ] Connect to backing resources via URL + secrets. Example of loading cloudant database via URL in Java code: [here](src/main/java/wasdev/sample/store/CloudantVisitorStore.java)
-- [ ] Externize connection info into external config. Such as in helm [values.yaml](charts/liberty-starter/values.yaml)
+- [ ] Externize connection info into external config. Such as in helm [values.yaml](chart/liberty-starter/values.yaml)
 
 ##### V. Build, Release, Run
 
@@ -65,13 +65,13 @@ Execute app as stateless process
 Export services via port binding. Apps should be self-contained.
 
 - [ ] Embed runtime execution environments into the app. Such as with the `FROM websphere-liberty:webProfile7` in the [Dockerfile](Dockerfile)
-- [ ] Expose service (such as HTTP) via a port and allow other apps by following `IV. Backing Services` factor. For this app, this is done via [server.xml](server.xml) and available for consumption by other services via the Kubernetes [service](charts/liberty-starter/templates/service.yaml). 
+- [ ] Expose service (such as HTTP) via a port and allow other apps by following `IV. Backing Services` factor. For this app, this is done via [server.xml](src/main/wlp/server.xml) and available for consumption by other services via the Kubernetes [service](chart/liberty-starter/templates/service.yaml). 
 
 ##### VIII. Concurrency
 
 Scale out via the process model
 
-- [ ] Scale out by adding more instances of your application (horizontal scaling) rather than adding more resources (vertical scaling). This is done in Kubernetes by increasing the number of replicas in the [deployment.yaml](charts/liberty-starter/templates/deployment.yaml) or by using the `kubectl scale` command
+- [ ] Scale out by adding more instances of your application (horizontal scaling) rather than adding more resources (vertical scaling). This is done in Kubernetes by increasing the number of replicas in the [deployment.yaml](chart/liberty-starter/templates/deployment.yaml) or by using the `kubectl scale` command
 - [ ] The process for your application is a first-class citizen for your deployment platform. Containers are just processes. If your app is running as PID 1, you can ensure that Kubernetes or Swarm can manage and scale that process like any other.
 
 ##### IX. Disposability
