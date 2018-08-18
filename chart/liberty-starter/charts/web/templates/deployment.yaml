@@ -22,7 +22,7 @@ spec:
 
     spec:
       containers:
-      - name: {{ .Chart.Name }}
+      - name: {{ .Release.Name }}-web
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:

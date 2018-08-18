@@ -54,7 +54,7 @@ podTemplate(label: 'mypod', cloud: cloud, serviceAccount: serviceAccount, namesp
             stage('Deploy new Docker Image') {
                 sh """
                 #!/bin/bash
-                DEPLOYMENT=`kubectl --namespace=${env.NAMESPACE} get deployments -l app=liberty-starter-app,tier=frontend -o name`
+                DEPLOYMENT=`kubectl --namespace=${env.NAMESPACE} get deployments -l app=liberty-starter,component=web-app,release=${env.RELEASE_NAME}-web -o name`
                 kubectl --namespace=${env.NAMESPACE} get \${DEPLOYMENT}
                 if [ \${?} -ne "0" ]; then
                     # No deployment to update
