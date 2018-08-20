@@ -11,5 +11,14 @@
     </httpEndpoint>
 
     <webApplication name="GetStartedJava" context-root="/" location="GetStartedJava.war"/>
-
+    <variable name="DERBY_JDBC_DRIVER_PATH" value="/opt/ibm/wlp/usr/shared/resources/derby/"/>
+    <dataSource id="wasstarter" jdbcDriverRef="Derby_Network_Server_Using_Derby_Client" jndiName="jdbc/wasstarter">
+        <properties.derby.client databaseName="demo" serverName="${env.DERBY_HOST}" portNumber="${env.DERBY_PORT}" user="${env.DERBY_USER}" password="${env.DERBY_PASSWORD}" />
+        <connectionManager agedTimeout="0" connectionTimeout="180" maxIdleTime="1800" maxPoolSize="10" minPoolSize="1" reapTime="180"/>
+    </dataSource>
+    <jdbcDriver id="Derby_Network_Server_Using_Derby_Client" javax.sql.DataSource="org.apache.derby.jdbc.ClientConnectionPoolDataSource">
+        <library>
+            <file name="${DERBY_JDBC_DRIVER_PATH}/derbyclient.jar"/>
+        </library>
+    </jdbcDriver>
 </server>

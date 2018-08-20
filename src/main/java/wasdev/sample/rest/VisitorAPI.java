@@ -53,7 +53,6 @@ public class VisitorAPI extends Application {
    * @return A collection of all the Visitors
    */
     @GET
-    @Path("/")
     @Produces({"application/json"})
     public String getVisitors() {
 		
@@ -97,7 +96,7 @@ public class VisitorAPI extends Application {
     @POST
     @Produces("application/json")
     @Consumes("application/json")
-    public String newToDo(Visitor visitor) {
+    public String newVisitor(Visitor visitor) {
       if(store == null) {
         return new Gson().toJson(visitor);
       }

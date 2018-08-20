@@ -7,7 +7,7 @@ The main difference with this version is that it does not use an external IBM Cl
 This version of the Liberty app also uses the [Cloudant Java Client](https://github.com/cloudant/java-cloudant) to add information to a database and then return information from a database to the UI.
 
 This app adheres to best practices of the [12-Factor app](https://12factor.net/). A detailed checklist can be found [here](12-factor.md).
- 
+
 <p align="center">
   <kbd>
     <img src="docs/GettingStarted.gif" width="300" style="1px solid" alt="Gif of the sample app contains a title that says, Welcome, a prompt asking the user to enter their name, and a list of the database contents which are the names Joe, Jane, and Bob. The user enters the name, Mary and the screen refreshes to display, Hello, Mary, I've added you to the database. The database contents listed are now Mary, Joe, Jane, and Bob.">
@@ -23,7 +23,7 @@ You'll need [IBM Cloud Private](https://www.ibm.com/cloud-computing/products/ibm
 
 ## Forking the repository
 
-1. Go to the repository located at https://github.com/odrodrig/get-started-java-icp 
+1. Go to the repository located at https://github.com/odrodrig/get-started-java-icp
 
 2. Sign into GitHub if you haven't already
 
@@ -119,9 +119,9 @@ In this section we will be connecting our cloned GitRepo to a Continuous Integra
 
 6. For **Repository URL** enter the url to the cloned repository that you forked earlier. Ensure the **/master** branch is being targeted and click **Save**.
 
-![pipeline config](./images/pipelineConfig.png) 
+![pipeline config](./images/pipelineConfig.png)
 
-Now with our pipeline configured we can make a change and deploy the new version. 
+Now with our pipeline configured we can make a change and deploy the new version.
 
 7. On your local machine, clone the repo that you forked before. To clone the repo use the following comand replacing **\<url to repo\>** with the url that you copied.
 

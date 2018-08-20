@@ -27,11 +27,11 @@ podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', name
                 NAMESPACE=`cat /var/run/configs/registry-config/namespace`
                 REGISTRY=`cat /var/run/configs/registry-config/registry`
 
-                docker build -t \${REGISTRY}/\${NAMESPACE}/liberty-starter:${env.BUILD_NUMBER} . 
+                docker build -t \${REGISTRY}/\${NAMESPACE}/liberty-starter:${env.BUILD_NUMBER} .
                 """
             }
             stage('Push Docker Image to Registry') {
-        
+
                 sh """
                 NAMESPACE=`cat /var/run/configs/registry-config/namespace`
                 REGISTRY=`cat /var/run/configs/registry-config/registry`
@@ -44,7 +44,7 @@ podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', name
 
                 docker push \${REGISTRY}/\${NAMESPACE}/liberty-starter:${env.BUILD_NUMBER}
                 """
-              
+
             }
         }
         container('kubectl') {
@@ -54,8 +54,8 @@ podTemplate(label: 'mypod', cloud: 'kubernetes', serviceAccount: 'default', name
                 set +e
                 NAMESPACE=`cat /var/run/configs/registry-config/namespace`
                 REGISTRY=`cat /var/run/configs/registry-config/registry`
-                DEPLOYMENT=`kubectl --namespace=\${NAMESPACE} get deployments -l app=liberty-starter-app,tier=frontend -o name`
-                
+                DEPLOYMENT=`kubectl --namespace=\${NAMESPACE} get deployments -l app=liberty-starter,component=web-app,release=${env.RELEASE_NAME}-web -o name`
+
                 kubectl --namespace=\${NAMESPACE} get \${DEPLOYMENT}
 
                 if [ \${?} -ne "0" ]; then

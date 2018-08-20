@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}
+  labels:
+    app: liberty-starter
+    component: web-app
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name | quote }}
+    tier: frontend
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      labels:
+         app: liberty-starter
+         component: web-app
+         chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+         release: {{ .Release.Name | quote }}
+         tier: frontend
+
+    spec:
+      containers:
+      - name: {{ .Release.Name }}-web
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - name: http
+          containerPort: {{ .Values.service.internalPort }}
+        env:
+        - name: DERBY_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-{{ .Chart.Name }}-secrets
+              key: derby-username
+        - name: DERBY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-{{ .Chart.Name }}-secrets
+              key: derby-password
+        - name: DERBY_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-{{ .Chart.Name }}-configmap
+              key: derby-host
+        - name: DERBY_PORT
+          valueFrom:
+              configMapKeyRef:
+                 name: {{ .Release.Name }}-{{ .Chart.Name }}-configmap
+                 key: derby-port

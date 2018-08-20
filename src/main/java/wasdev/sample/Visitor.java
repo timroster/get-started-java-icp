@@ -20,51 +20,28 @@ package wasdev.sample;
  */
 
 public class Visitor {
-	private String _id;
-	private String _rev;
+
 	private String name = null;
+	private int id;
+	
+
+	public int getId() {
+		return id;
+	}
+
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 
 	public Visitor() {
 		this.name = "";
 	}
 
-	/**
-	 * Gets the ID.
-	 * 
-	 * @return The ID.
-	 */
-	public String get_id() {
-		return _id;
-	}
-
-	/**
-	 * Sets the ID
-	 * 
-	 * @param _id
-	 *            The ID to set.
-	 */
-	public void set_id(String _id) {
-		this._id = _id;
-	}
-
-	/**
-	 * Gets the revision of the document.
-	 * 
-	 * @return The revision of the document.
-	 */
-	public String get_rev() {
-		return _rev;
-	}
-
-	/**
-	 * Sets the revision.
-	 * 
-	 * @param _rev
-	 *            The revision to set.
-	 */
-	public void set_rev(String _rev) {
-		this._rev = _rev;
-	}
+	
 	
 	/**
 	 * Gets the visitorName of the document.
