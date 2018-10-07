@@ -3,8 +3,11 @@ image:
   tag: 0.92
   pullPolicy: Always
 
+ingress:
+  enabled: true
+  
 service:
-  type: NodePort
+  type: ClusterIP
   internalPort: 9080
 
   resources: {}
