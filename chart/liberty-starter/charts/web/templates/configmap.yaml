@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-configmap
+data:
+    derby-host: {{ .Release.Name }}-apache-derby
+    derby-port: "{{ .Values.global.derbyPort}}"

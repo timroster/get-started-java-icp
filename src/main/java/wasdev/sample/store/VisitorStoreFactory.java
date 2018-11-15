@@ -19,10 +19,8 @@ public class VisitorStoreFactory {
 	
 	private static VisitorStore instance;
 	static {
-		CloudantVisitorStore cvif = new CloudantVisitorStore();	
-		if(cvif.getDB() != null){
-			instance = cvif;
-		}
+		JPAVisitorStore jpavif = new JPAVisitorStore();	
+		instance = jpavif;
 	}
 	
 	public static VisitorStore getInstance() {
