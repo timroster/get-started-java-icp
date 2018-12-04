@@ -1,10 +1,7 @@
 #!/bin/bash
 
-#Install latest ICP plugin
-bx plugin install ./icp-linux-amd64 -f
-
-#Log into the ICP plugin
-bx pr login -u admin -p admin -c id-mycluster-account
+#log into the cloudctl tool for managing ICP
+cloudctl login -u admin -p admin -c id-mycluster-account -a https://mycluster.icp:8443 -n default --skip-ssl-validation
 
 #Initialize helm
 helm init

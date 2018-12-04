@@ -26,6 +26,6 @@ You should see **Switched to context "cluster.local-context"** when done.
 bash setup.sh
 ```
 
-This setup script will install the IBM Cloud Private plugin for the command line and configure it to point to the cluster within ICP. This also properly configures helm to work with ICP.
+This setup script will authenticate the 'cloudctl' tool with your instance of ICP and configure it to point to the cluster within ICP. This also properly configures helm to work with ICP.
 
 ![Helm Configured](../images/helmConfigured.png)
