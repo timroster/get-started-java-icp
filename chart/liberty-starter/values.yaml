@@ -13,7 +13,7 @@ web:
     tag: 0.93
     pullPolicy: Always
   service:
-    type: NodePort
+    type: ClusterIP
     internalPort: 9080
 
 apache-derby:
