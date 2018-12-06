@@ -31,31 +31,41 @@ You'll need [IBM Cloud Private](https://www.ibm.com/cloud-computing/products/ibm
 
 This will create a copy of the application in your GitHub account for you to be able to modify
 
-## Accessing BlueDemos
+## Accessing the IBM Cloud Private Hosted Trial
 
-1. Go to [Blue Demos](https://bluedemos.com/show/199) and request an instance of ICP
+For this lab, we will be borrowing from an existing tutorial from the IBM Cloud Garage team. The tutorial and many like it can be found at https://www.ibm.com/cloud/garage/dte/tutorial/set-jenkins-pipeline-continuously-integrate-and-deliver-kubernetes-deployments-ibm-cloud?task=3.
+
+1. Go to [this IBM Cloud Garage tutorial](https://www.ibm.com/cloud/garage/dte/tutorial/set-jenkins-pipeline-continuously-integrate-and-deliver-kubernetes-deployments-ibm-cloud?task=3) 
+
+2. On the right side of that page you should see a section that is titled *Before you start*. Click on the *log in* link and log in with your IBM ID if you haven't already.
+
+![Before you start](./images/before.png)
+
+3. Fill out the information that the form is asking for and once you agree to the terms of use, then click on **Reserve instance**.
 
 2. You should get an email with a link to the environment and a password to sign in with.
 
-3. Once logged into your IBM Cloud Private virtual environment, click on the profile icon at the top right of the dashboard and select **Configure client**.
+![Link in email](./images/linkInEmail.png)
 
-![Configure Client](./images/configureClient.png)
+3. Next, copy the **Desktop password** from the email and click on the link.
 
-4. Copy all the lines or just click on the double page icon to copy all lines to the clipboard.
+4. Enter your password to access the demo
 
-![Copy Lines](./images/copyLines.png)
+   Be sure to take out any spaces you may have copied with the password. If you are getting an invalid password error, paste what you have copied into a text document and verify that there are no spaces in the password that you copied.
 
-5. Then, open up the terminal by either double clicking the icon on the desktop or by clicking on the blue button at the top left of taskbar and selecting **terminal emulator**.
+5. you should then see two VMs. Click on the play button above the **Master** VM.
+
+   It will take a few minutes for the VMs to start. After they are started, click on the **Master** VM.
+
+   Be sure to resize your window using the VM controls to make navigation within the VM comfortable. 
+
+5. Once you can see the VM's desktop, open up the terminal by either double clicking the icon on the desktop or by clicking on the blue button at the top left of taskbar and selecting **terminal emulator**.
 
 ![terminal](./images/terminal.png)
 
-6. Paste in the lines that were copied in the previous step.
+Our first task within the VM will be to authenticate the *cloudctl* cli tool with the IBM Cloud Private cluster which will configure the *kubectl* and *helm* cli tools as well.
 
-![Cluster context](./images/clusterContext.png)
-
-You should see **Switched to context "cluster.local-context"** when done.
-
-7. Then, CD into your **~/Documents/** directory and clone the GitHub project that you forked earlier. You can find this by navigating to the repository in your browser and clicking on the green **Clone or Download** button on the right side of the page.
+7. CD into your **~/Documents/** directory and clone the GitHub project that you forked earlier. You can find this by navigating to the repository in your browser and clicking on the green **Clone or Download** button on the right side of the page.
 
 To clone the repo use the following comand replacing **\<url to repo\>** with the url that you copied.
 
@@ -78,13 +88,56 @@ This setup script will install the IBM Cloud Private plugin for the command line
 
 ## Deploying the Helm chart of the application
 
-1. CD into the **/chart/liberty-starter/** directory of this repository and run the following command:
+Before we install the Helm chart, we need to add an image policy to IBM Cloud Private that will allow us to pull public Docker images from Docker Hub. 
+
+1. Open the Firefox browser and click on the **IBM Cloud Private** bookmark in the bookmark bar just under the address bar.
+
+![Bookmark](./images/bookmarkBar.png)
+
+2. Log into ICP using **admin** as the username and password.
+
+1. Then, click on the menu button at the top left and click on **Manage** and then **Resource Security**.
+
+  ![Resource Security](./images/resourceSecurity.png)
+
+2. Then, click on the button on the left side of the page that says **Image Policies**
+
+  ![Image Policies](./images/imagePolicies.png)
+
+3. Click on the blue **Create Image Policy** on the right side of the page.
+
+4. Enter the following information in their respective fields:
+  - Name: Docker
+  - Scope: Namespace
+  - Namespace: default
+
+  ![New Image Policty](./images/newImagePolicy.png)
+
+  Then click on **Add Registry** and for *Registry URL* enter the following:
+
+  ```bash
+  docker.io/*
+  ```
+
+  Next, ensure that *VA scan policy* is set to **Do not enforce**
+
+  ![Add Registry](./images/addRegistry.png)
+
+  5. Click **Add**
+
+With our new Image Policy set up, we can now deploy public images from Docker Hub to ICP.
+
+6. Open up your terminal again
+
+7. CD into the **/chart/liberty-starter/** directory of this repository and run the following command:
 
 ```bash
 helm install . --tls --name liberty-starter
 ```
 
-This will deploy the java application as well as a cloudant database within the kubernetes cluster.
+This will deploy the java application as well as a derby database within the kubernetes cluster.
+
+Since this instance of ICP is running inside of a VM, we can't access our application outside of that VM. If you'd like to check out the app that was just deployed, from the the VM's browser, go to http://10.1.0.223:9080/liberty-starter-demo-ui/ 
 
 ## Creating a CI/CD pipeline
 
@@ -97,9 +150,9 @@ In this section we will be connecting our cloned GitRepo to a Continuous Integra
   | Push Docker Image to Registry | Uploads the Docker image to the Docker image registry withinin ICP             |
   | Deploy New Docker Image       | Updates the image tag in the Kubernetes deployment triggering a rolling update |
 
- More details of this pipline can be found in the [Jenkinsfile](./Jenkinsfile).
+ More details of this pipline can be found in [JenkinsfileLab](./JenkinsfileLab).
 
- 1. Jenkins is already installed in this instance of IBM Cloud Private. To access it, open the Firefox browser and click on the Jenkins bookmark from the bookmark bar.
+ 1. Jenkins is already installed in this instance of IBM Cloud Private. To access it, open the Firefox browser and click on the **Most Visited** entry from the bookmark bar and select **Dashboard[Jenkins]**.
 
  ![Jenkins bookmark](./images/jenkinsBookmark.png)
 
