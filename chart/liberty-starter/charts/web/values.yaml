@@ -2,12 +2,9 @@ image:
   repository: djccarew/liberty-starter
   tag: 0.92
   pullPolicy: Always
-
-ingress:
-  enabled: true
   
 service:
-  type: ClusterIP
+  type: NodePort
   internalPort: 9080
 
   resources: {}
