@@ -29,11 +29,13 @@ You'll need [IBM Cloud Private](https://www.ibm.com/cloud-computing/products/ibm
 
 3. Click on the **Fork** button at the top right of the page
 
+4. Be sure to copy the URL to this newly forked project.
+
 This will create a copy of the application in your GitHub account for you to be able to modify
 
-## Accessing the IBM Cloud Private Hosted Trial
+## Accessing the IBM Cloud demo instance
 
-For this lab, we will be borrowing from an existing tutorial from the IBM Cloud Garage team. The tutorial and many like it can be found at https://www.ibm.com/cloud/garage/dte/tutorial/set-jenkins-pipeline-continuously-integrate-and-deliver-kubernetes-deployments-ibm-cloud?task=3.
+For this lab, we will be borrowing from an existing tutorial from the IBM Cloud Garage. The tutorial and many like it can be found at https://www.ibm.com/cloud/garage/dte/tutorial/set-jenkins-pipeline-continuously-integrate-and-deliver-kubernetes-deployments-ibm-cloud?task=3.
 
 1. Go to [this IBM Cloud Garage tutorial](https://www.ibm.com/cloud/garage/dte/tutorial/set-jenkins-pipeline-continuously-integrate-and-deliver-kubernetes-deployments-ibm-cloud?task=3) 
 
@@ -53,9 +55,11 @@ For this lab, we will be borrowing from an existing tutorial from the IBM Cloud 
 
    Be sure to take out any spaces you may have copied with the password. If you are getting an invalid password error, paste what you have copied into a text document and verify that there are no spaces in the password that you copied.
 
-5. you should then see two VMs. Click on the play button above the **Master** VM.
+5. You should then see two VMs. Click on the play button above the **Master** VM.
 
    It will take a few minutes for the VMs to start. After they are started, click on the **Master** VM.
+
+   ![master vm](./images/masterVM.png)
 
    Be sure to resize your window using the VM controls to make navigation within the VM comfortable. 
 
@@ -115,7 +119,7 @@ Before we install the Helm chart, we need to add an image policy to IBM Cloud Pr
 
   Then click on **Add Registry** and for *Registry URL* enter the following:
 
-  ```bash
+  ```
   docker.io/*
   ```
 
@@ -137,7 +141,25 @@ helm install . --tls --name liberty-starter
 
 This will deploy the java application as well as a derby database within the kubernetes cluster.
 
-Since this instance of ICP is running inside of a VM, we can't access our application outside of that VM. If you'd like to check out the app that was just deployed, from the the VM's browser, go to http://10.1.0.223:9080/liberty-starter-demo-ui/ 
+Since this instance of ICP is running inside of a VM, we can't access our application outside of that VM. If you'd like to view the app you just deployed, do the following: 
+
+1. From ICP, click on the menu button at the top left and click on *Network Access* then *Services*.
+2. On the services page, look for the **liberty-starter-web** service and click on it.
+3. Look for the entry labeled *Cluster IP* and copy it.
+4. Open up a new tab in the browser and enter the following address, replacing *"cluster IP"* with the cluster IP that you copied previously.
+```
+http://<cluster IP>:9080/liberty-starter-ui/
+```
+
+For example, mine looks like this:
+
+```
+http://10.1.0.220:9080/liberty-starter-ui/
+```
+
+5. In the app, you can enter a name and it will be saved in the derby database. If you refresh the page, you will see the contents of the database under the textbox.
+
+![Running App](./images/runningApp.png)
 
 ## Creating a CI/CD pipeline
 
@@ -188,7 +210,7 @@ git clone <url to repo>
 
 ![lang tag](./images/langTag.png)
 
-10. Change the **"es"** to one of the following:
+10. Change the **"en"** to one of the following:
 
 - en: English
 - es: Spanish
@@ -212,4 +234,6 @@ Since this instance of ICP is for demos, it can't be accessed by github which ma
 
 ![stages](./images/stages.png)
 
-15. When the pipeline is finish deploying, open up the app from ICP and you can see that the language of the page has been changed.
+15. When the pipeline is finish deploying, open up the app by going to the address that we found earlier and you can see that the language of the page has been changed.
+
+
