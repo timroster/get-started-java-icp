@@ -130,27 +130,17 @@ With our new Image Policy set up, we can now deploy public images from Docker Hu
 7. CD into the **/chart/liberty-starter/** directory of this repository and run the following command:
 
 ```bash
-helm install . --tls --name liberty-starter-demo
+helm install . --tls --name liberty-starter
 ```
 
 This will deploy the java application as well as a derby database within the kubernetes cluster.
 
 Since this instance of ICP is running inside of a VM, we can't access our application outside of that VM. If you'd like to view the app you just deployed, do the following: 
 
-1. From ICP, click on the menu button at the top left and click on *Network Access* then *Services*.
-2. On the services page, look for the **liberty-starter-web** service and click on it.
-3. Look for the entry labeled *Cluster IP* and copy it.
-4. Open up a new tab in the browser and enter the following address, replacing *"cluster IP"* with the cluster IP that you copied previously.
-```
-http://<cluster IP>:9080/liberty-starter-demo-ui/
-```
-
-For example, mine looks like this:
-
-```
-http://10.1.0.220:9080/liberty-starter-demo-ui/
-```
-
+1. From ICP, click on the menu button at the top left and click on *Workloads* then *Deployments*.
+2. On the deployments page, look for the **liberty-starter-web** deployment and click on it.
+3. Then, click on the blue *launch* button at the top right of the page.
+4. A new tab should open up in your browser that will take you to the running app.
 5. In the app, you can enter a name and it will be saved in the derby database. If you refresh the page, you will see the contents of the database under the textbox.
 
 ![Running App](./images/runningApp.png)
