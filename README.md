@@ -2,9 +2,7 @@
 # Liberty getting started application
 This is a modified version of the code for [Getting started tutorial for Liberty](https://console.bluemix.net/docs/runtimes/liberty/getting-started.html#getting-started-tutorial) for use in IBM Cloud Private developer training.
 
-The main difference with this version is that it does not use an external IBM Cloudant service but rather uses a containerized version of Cloudant called [Cloudant for Developers](https://hub.docker.com/r/ibmcom/cloudant-developer/) so it can be deployed in it's entirety to the IBM Cloud Private Kubernetes environment.
-
-This version of the Liberty app also uses the [Cloudant Java Client](https://github.com/cloudant/java-cloudant) to add information to a database and then return information from a database to the UI.
+The main difference with this version is that it does not use an external IBM Cloudant service but rather uses a containerized version of Apache Derby database. 
 
 This app adheres to best practices of the [12-Factor app](https://12factor.net/). A detailed checklist can be found [here](12-factor.md).
 
@@ -15,11 +13,6 @@ This app adheres to best practices of the [12-Factor app](https://12factor.net/)
 </p>
 
 The following steps are the general procedure to set up and deploy your app to IBM Cloud. See more detailed instructions in the [Getting started tutorial for Liberty](https://console.bluemix.net/docs/runtimes/liberty/getting-started.html#getting-started-tutorial).
-
-
-## Before you begin
-
-You'll need [IBM Cloud Private](https://www.ibm.com/cloud-computing/products/ibm-cloud-private/), the [IBM Cloud Private CLI](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_2.1.0.3/manage_cluster/install_cli.html) and the command line tools [kubectl](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_2.1.0.3/manage_cluster/cfc_cli.html), and [helm](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_2.1.0.3/app_center/create_helm_cli.html).
 
 ## Forking the repository
 
@@ -57,7 +50,7 @@ For this lab, we will be borrowing from an existing tutorial from the IBM Cloud 
 
 5. You should then see two VMs. Click on the play button above the **Master** VM.
 
-   It will take a few minutes for the VMs to start. After they are started, click on the **Master** VM.
+   It will take a few minutes for the VMs to start. After they are started, click on **ICPMasater**.
 
    ![master vm](./images/masterVM.png)
 
@@ -111,7 +104,7 @@ Before we install the Helm chart, we need to add an image policy to IBM Cloud Pr
 3. Click on the blue **Create Image Policy** on the right side of the page.
 
 4. Enter the following information in their respective fields:
-  - Name: Docker
+  - Name: docker
   - Scope: Namespace
   - Namespace: default
 
@@ -128,6 +121,7 @@ Before we install the Helm chart, we need to add an image policy to IBM Cloud Pr
   ![Add Registry](./images/addRegistry.png)
 
   5. Click **Add**
+  6. Click **Add** at the top right to finalize the Image Policy.
 
 With our new Image Policy set up, we can now deploy public images from Docker Hub to ICP.
 
@@ -136,7 +130,7 @@ With our new Image Policy set up, we can now deploy public images from Docker Hu
 7. CD into the **/chart/liberty-starter/** directory of this repository and run the following command:
 
 ```bash
-helm install . --tls --name liberty-starter
+helm install . --tls --name liberty-starter-demo
 ```
 
 This will deploy the java application as well as a derby database within the kubernetes cluster.
@@ -148,13 +142,13 @@ Since this instance of ICP is running inside of a VM, we can't access our applic
 3. Look for the entry labeled *Cluster IP* and copy it.
 4. Open up a new tab in the browser and enter the following address, replacing *"cluster IP"* with the cluster IP that you copied previously.
 ```
-http://<cluster IP>:9080/liberty-starter-ui/
+http://<cluster IP>:9080/liberty-starter-demo-ui/
 ```
 
 For example, mine looks like this:
 
 ```
-http://10.1.0.220:9080/liberty-starter-ui/
+http://10.1.0.220:9080/liberty-starter-demo-ui/
 ```
 
 5. In the app, you can enter a name and it will be saved in the derby database. If you refresh the page, you will see the contents of the database under the textbox.
