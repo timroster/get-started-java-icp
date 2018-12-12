@@ -190,7 +190,7 @@ git clone <url to repo>
 
 8. Open the application in a code editor or IDE of your choice. For this lab we will be making a change to the index.html page to change the display language.
 
-9. Open /src/main/webapp/index.html and on line 2 locate the **\<html lang="es">** tag.
+9. Open **/src/main/webapp/index.html** and on line 2 locate the **\<html lang="es">** tag.
 
 ![lang tag](./images/langTag.png)
 
