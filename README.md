@@ -156,7 +156,7 @@ In this section we will be connecting our cloned GitRepo to a Continuous Integra
   | Push Docker Image to Registry | Uploads the Docker image to the Docker image registry withinin ICP             |
   | Deploy New Docker Image       | Updates the image tag in the Kubernetes deployment triggering a rolling update |
 
- More details of this pipline can be found in [JenkinsfileLab](./JenkinsfileLab).
+ More details of this pipline can be found in [Jenkinsfile](./Jenkinsfile).
 
  1. Jenkins is already installed in this instance of IBM Cloud Private. To access it, open the Firefox browser and click on the **Most Visited** entry from the bookmark bar and select **Dashboard[Jenkins]**.
 
@@ -190,7 +190,7 @@ git clone <url to repo>
 
 8. Open the application in a code editor or IDE of your choice. For this lab we will be making a change to the index.html page to change the display language.
 
-9. Open **/src/main/webapp/index.html** and on line 2 locate the **\<html lang="es">** tag.
+9. Open **/src/main/webapp/index.html** and on line 2 locate the **\<html lang="en">** tag.
 
 ![lang tag](./images/langTag.png)
 
@@ -208,7 +208,7 @@ This will change the language that loads on the webpage to whatever language you
 
 Since this instance of ICP is for demos, it can't be accessed by github which makes automatic deployments not possible on code commits but we can manually trigger pipeline builds.
 
-12. Swich back to ICP and open the pipeline that was created earlier.
+12. Swich back to ICP and open the job that was created earlier.
 
 13. Click on the **Build now** button to manually start the build process. This will pull the latest code from your code repository on GitHub.
 
